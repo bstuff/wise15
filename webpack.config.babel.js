@@ -67,8 +67,8 @@ export default function (env = {}) {
 
     devtool: NODE_ENV === 'production' ? false : 'inline-source-map',
     plugins: [
-      dev && new HtmlWebpackPlugin({
-        title: 'GettDelivery',
+      new HtmlWebpackPlugin({
+        title: 'Wise15',
         template: './src/index.pug',
         filename: 'index.html',
       }),
