@@ -18,8 +18,11 @@
     "react-input-mask": "^2.0.3",
     "react-modal": "^3.5.1",
     "react-promise": "^2.0.3",
+    "react-redux": "^5.0.7",
     "react-responsive": "^5.0.0",
-    "recompose": "^0.28.1",
+    "recompose": "^0.28.2",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
     "reset.css": "^2.0.2",
     "rxjs": "^6.2.2",
     "whatwg-fetch": "^2.0.4"
