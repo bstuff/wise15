@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
 import { chunk, shuffle } from 'lodash-es';
-import { mapProps } from 'recompose';
+import { mapProps, compose } from 'recompose';
 
 import styles from './Game.styl';
 
@@ -20,14 +21,21 @@ export const GameRows = ({
 
 const convertArrToRows: number[] => number[][] = arr => chunk(arr, 4);
 
-const enhance = mapProps(
-  ({
-    arrayOfNumbers = shuffle(Array.from(Array(16)).map((e, i) => +i)),
-  }: {
-    arrayOfNumbers: number[],
-  }) => ({
-    rows: convertArrToRows(arrayOfNumbers),
-  }),
+const enhance = compose(
+  connect(
+    state => ({
+      arrayOfNumbers: state.game.rows,
+    }),
+  ),
+  mapProps(
+    ({
+      arrayOfNumbers,
+    }: {
+      arrayOfNumbers: number[],
+    }) => ({
+      rows: convertArrToRows(arrayOfNumbers),
+    }),
+  ),
 );
 
 export const Game = enhance(GameRows);
