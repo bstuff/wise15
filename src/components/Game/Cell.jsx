@@ -19,7 +19,7 @@ export const DCell = ({
       <button
         type="button"
         className={cn(styles.cellItem, {
-          [styles.cellZero]: number === 0,
+          [styles.cellZero]: number === 16,
         })}
         onClick={handleClick}
       >

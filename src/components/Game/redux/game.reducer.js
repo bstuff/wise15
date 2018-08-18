@@ -4,7 +4,7 @@ import * as types from './game.types';
 import { type Direction } from './game.actions';
 
 const initial = {
-  rows: shuffle(Array.from(Array(16)).map((e, i) => +i)),
+  rows: shuffle(Array.from(Array(16)).map((e, i) => +i + 1)),
   history: [],
   finish: false,
 };
@@ -67,8 +67,7 @@ const swapArrayElements = (a, x, y) => {
 };
 
 const isFinish = (arr: number[]): boolean => {
-  if (arr[15] !== 0) return false;
-  for (let i = 0; i < 14; i += 1) {
+  for (let i = 0; i < 15; i += 1) {
     if (arr[i + 1] < arr[i]) return false;
   }
   return true;
@@ -77,7 +76,7 @@ const isFinish = (arr: number[]): boolean => {
 const processMove = (state, cur: Position, next: Position) => {
   if (!canMoveTo(cur, next)) return state;
 
-  const rows = swapArrayElements([...state.rows], state.rows.indexOf(0), 4 * next.row + next.column);
+  const rows = swapArrayElements([...state.rows], state.rows.indexOf(16), 4 * next.row + next.column);
 
   const finish = isFinish(rows);
 
@@ -112,16 +111,16 @@ export default (state: typeof initial = initial, action: Object) => {
 
   switch (action.type) {
   case types.MOVE: {
-    const freePosition = getRowAndColumn(0, state.rows);
+    const freePosition = getRowAndColumn(16, state.rows);
     const nextPosition = getNextPosition(freePosition, action.payload);
 
     return processMove(state, freePosition, nextPosition);
   }
   case types.MOVE_TO: {
     const { payload }: { payload: number } = action;
-    if (payload === 0) break;
+    if (payload === 16) break;
 
-    const freePosition = getRowAndColumn(0, state.rows);
+    const freePosition = getRowAndColumn(16, state.rows);
     const nextPosition = getRowAndColumn(payload, state.rows);
 
     return processMove(state, freePosition, nextPosition);
@@ -144,7 +143,7 @@ export default (state: typeof initial = initial, action: Object) => {
   case types.TEST_WIN: {
     return {
       ...state,
-      rows: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15 ],
+      rows: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 15 ],
       history: [],
       finish: false,
     };
