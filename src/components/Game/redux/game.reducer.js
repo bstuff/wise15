@@ -4,12 +4,25 @@ import sgn from 'permutation-parity';
 import * as types from './game.types';
 import { type Direction } from './game.actions';
 
+const swapArrayElements = (a, x, y) => {
+  const [ min, max ] = [ Math.min(x, y), Math.max(x, y) ];
+  return [
+    ...a.slice(0, min),
+    a[max],
+    ...a.slice(min + 1, max),
+    a[min],
+    ...a.slice(max + 1),
+  ];
+};
+
 const initRows = () => {
-  let rows = shuffle(Array.from(Array(16)).map((e, i) => +i + 1));
-  while (sgn(rows) === -1) {
-    rows = shuffle(Array.from(Array(16)).map((e, i) => +i + 1));
+  const shuf = () => shuffle(Array.from(Array(16)).map((e, i) => +i + 1));
+  const r = shuf();
+
+  if (sgn(r) === -1) {
+    return swapArrayElements(r, 1, 3);
   }
-  return rows;
+  return r;
 };
 
 const initial = {
@@ -62,17 +75,6 @@ const canMoveTo = (startPosition: Position, endPosition: Position): boolean => {
   if (startPosition.row === endPosition.row && Math.abs(startPosition.column - endPosition.column) === 1) return true;
   if (startPosition.column === endPosition.column && Math.abs(startPosition.row - endPosition.row) === 1) return true;
   return false;
-};
-
-const swapArrayElements = (a, x, y) => {
-  const [ min, max ] = [ Math.min(x, y), Math.max(x, y) ];
-  return [
-    ...a.slice(0, min),
-    a[max],
-    ...a.slice(min + 1, max),
-    a[min],
-    ...a.slice(max + 1),
-  ];
 };
 
 const isFinish = (arr: number[]): boolean => {
