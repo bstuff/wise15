@@ -9,3 +9,7 @@ export const moveTo = (number: number) => ({
 export const stepBack = ({
   type: types.STEP_BACK,
 });
+
+export const testWin = ({
+  type: types.TEST_WIN,
+});

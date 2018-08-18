@@ -1,10 +1,11 @@
 // @flow
-import { shuffle, chunk } from 'lodash-es';
+import { shuffle } from 'lodash-es';
 import * as types from './game.types';
 
 const initial = {
   rows: shuffle(Array.from(Array(16)).map((e, i) => +i)),
   history: [],
+  finish: false,
 };
 
 type Position = {
@@ -37,6 +38,16 @@ const swapArrayElements = (a, x, y) => {
   ];
 };
 
+const isFinish = (arr: number[]): boolean => {
+  if (arr[15] !== 0) return false;
+  for (let i = 0; i < 14; i += 1) {
+    if (arr[i + 1] < arr[i]) return false;
+  }
+  return true;
+};
+
+console.log(isFinish([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0 ]));
+
 // console.log(
 //   swapArrayElements(
 //     Array.from(Array(16)).map((e, i) => +i + 1),
@@ -46,7 +57,9 @@ const swapArrayElements = (a, x, y) => {
 // );
 
 
-export default (state = initial, action) => {
+export default (state: typeof initial = initial, action: Object) => {
+  if (state.finish) return state;
+
   switch (action.type) {
   case types.MOVE_TO: {
     const { payload }: { payload: number } = action;
@@ -57,13 +70,20 @@ export default (state = initial, action) => {
 
     if (!canMoveTo(freePosition, nextPosition)) break;
 
+    const rows = swapArrayElements([...state.rows], state.rows.indexOf(0), state.rows.indexOf(payload));
+
+    const finish = isFinish(rows);
+
+    if (finish) setTimeout(() => alert('вы выиграли'), 16);
+
     return {
       ...state,
       history: [
         ...state.history,
         state.rows,
       ],
-      rows: swapArrayElements([...state.rows], state.rows.indexOf(0), state.rows.indexOf(payload)),
+      rows,
+      finish,
     };
   }
 
@@ -80,6 +100,16 @@ export default (state = initial, action) => {
     }
     break;
   }
+
+  case types.TEST_WIN: {
+    return {
+      ...state,
+      rows: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15 ],
+      history: [],
+      finish: false,
+    };
+  }
+
   default:
     return state;
   }

@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 
 import styles from './Game.styl';
 
-import { stepBack } from './redux/game.actions';
+import { stepBack, testWin } from './redux/game.actions';
 
 export const BButton = ({
   handleClick,
+  handleTest,
 }: {
   handleClick: () => void,
+  handleTest: () => void,
 }) => (
   <div className={styles.back}>
     <button
@@ -18,12 +20,19 @@ export const BButton = ({
     >
       Шаг назад
     </button>
+    <button
+      type="button"
+      onClick={handleTest}
+    >
+      Показать выигрыш
+    </button>
   </div>
 );
 
 export const Back = connect(
   null,
   (dispatch, ownProps) => ({
-    handleClick: () => dispatch(stepBack)
+    handleClick: () => dispatch(stepBack),
+    handleTest: () => dispatch(testWin),
   })
 )(BButton);
