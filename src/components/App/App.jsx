@@ -1,16 +1,16 @@
 // @flow
 import React from 'react';
 import { hot, setConfig } from 'react-hot-loader';
-import MediaQuery from 'react-responsive';
 
 import styles from './App.styl';
 
+import { Game } from '../Game';
 import { ModalProvider, ModalRoot } from '../ModalProvider';
 
 const App = () => (
   <ModalProvider>
     <div className={styles.app}>
-      Првет!
+      <Game />
     </div>
     <ModalRoot />
   </ModalProvider>
