@@ -15,15 +15,17 @@ export const DCell = ({
   handleClick: () => void,
 }) => (
   <div className={styles.cell}>
-    <button
-      type="button"
-      className={cn(styles.cellItem, {
-        [styles.cellZero]: number === 0,
-      })}
-      onClick={handleClick}
-    >
-      {number}
-    </button>
+    <div className={styles.cellWrapper}>
+      <button
+        type="button"
+        className={cn(styles.cellItem, {
+          [styles.cellZero]: number === 0,
+        })}
+        onClick={handleClick}
+      >
+        {number}
+      </button>
+    </div>
   </div>
 );
 

@@ -3,8 +3,10 @@
 declare module.exports: {|
   +'cell': string;
   +'cellItem': string;
+  +'cellWrapper': string;
   +'cellZero': string;
   +'cell__item': string;
+  +'cell__wrapper': string;
   +'cell__zero': string;
   +'game': string;
   +'row': string;

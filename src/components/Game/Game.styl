@@ -1,6 +1,11 @@
 .game
-  width 600px
+  max-width 38em
+  width 100%
   margin 0 auto
+  border 1px solid black
+  *
+    box-sizing border-box
+
 
 .row
   display flex
@@ -8,13 +13,22 @@
 
 .cell
   flex 0 0 25%
-  &__item
-    reset-button ()
-    box-sizing border-box
-    // background red
-    border 1px solid blue
+  padding 0.1em
+  &__wrapper
     position relative
     padding-bottom 100%
     height 0
+    display flex
+    align-items center
+
+
+  &__item
+    reset-button ()
+    trbl ()
+    position absolute
+    box-sizing border-box
+    background gold
+    font-size 3em
+
   &__zero
     opacity 0
