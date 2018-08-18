@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { chunk, shuffle } from 'lodash-es';
+import { chunk } from 'lodash-es';
 import { mapProps, compose } from 'recompose';
 
 import styles from './Game.styl';
 
 import { Row } from './Row';
+import { Back } from './Back';
 
 export const GameRows = ({
   rows,
@@ -14,6 +15,7 @@ export const GameRows = ({
   rows: Array<Array<number>>
 }) => (
   <div className={styles.game}>
+    <Back />
     {rows.map(row => <Row key={row[0]} cells={row} />)}
   </div>
 );

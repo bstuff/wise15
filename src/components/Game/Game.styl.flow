@@ -3,7 +3,9 @@
 declare module.exports: {|
   +'cell': string;
   +'cellItem': string;
+  +'cellZero': string;
   +'cell__item': string;
+  +'cell__zero': string;
   +'game': string;
   +'row': string;
 |};

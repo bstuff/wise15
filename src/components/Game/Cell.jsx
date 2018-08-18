@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import styles from './Game.styl';
 
@@ -16,7 +17,9 @@ export const DCell = ({
   <div className={styles.cell}>
     <button
       type="button"
-      className={styles.cellItem}
+      className={cn(styles.cellItem, {
+        [styles.cellZero]: number === 0,
+      })}
       onClick={handleClick}
     >
       {number}
