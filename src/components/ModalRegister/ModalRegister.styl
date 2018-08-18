@@ -1,0 +1,91 @@
+.modal
+  position fixed
+  pointer-events all
+  -webkit-overflow-scrolling touch
+  z-index 2000
+  trbl ()
+
+  *
+    box-sizing border-box
+
+  &:before
+    content ''
+    display block
+    position fixed
+    background rgba(0,0,0,.4) center / cover no-repeat
+    trbl ()
+    pointer-events none
+    -webkit-backface-visibility hidden
+
+.modal-scroll
+  position absolute
+  trbl ()
+  right -100px
+  padding-right 100px
+  pointer-events all
+  overflow auto
+
+.modal-center
+  height 100%
+  width 100%
+  display table
+  position relative
+  overflow hidden
+  pointer-events none
+
+.modal-center-row
+  pointer-events none
+  display table-row
+
+.modal-center-cell
+  pointer-events none
+  display table-cell
+  vertical-align middle
+
+.modal-content
+  pointer-events none
+  position relative
+  margin 0px auto
+  padding 1rem
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+
+.popup
+  pointer-events all
+  box-sizing border-box
+  width 28rem
+  &__close-wrapper
+    text-align right
+    position relative
+    transform translateY(-1.5em)
+  &__close
+    position absolute
+    background red
+    reset-button ()
+    top 0px
+    right 0px
+    font-size 3em
+    font-weight 100
+    color lightgrey
+    text-transform uppercase
+    &:hover
+      filter brightness(0.9)
+
+  &__bg
+    background white
+    padding 2em 1.5em
+    border-radius 0.8em
+
+  &__footnote
+    margin-top 1em
+    font-size 0.8em
+    color white
+    a
+      color white
+      &:before
+      &:after
+        content ' '
+        text-decoration none
+

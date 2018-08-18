@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&subset=cyrillic');
+
+html
+  font-size 16px
+  height: 100%;
+  width-between-property 'font-size', 420, 10, 1024, 14, true, false
+  width-between-property 'font-size', 1024, 14, 1200, 16, false, true
+body
+  // height 100%
+  min-height 100%
+  background lightgrey
+  font-family 'Roboto', Arial, Helvetica
+  display flex
+  flex-direction column
+
+:global
+  #app
+    flex 1
+    height 100%
+    display flex
+
+::selection
+  color #fff
+  text-shadow none
+  background $mainColor
