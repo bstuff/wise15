@@ -1,6 +1,7 @@
 // @flow
 import { shuffle } from 'lodash-es';
 import * as types from './game.types';
+import { type Direction } from './game.actions';
 
 const initial = {
   rows: shuffle(Array.from(Array(16)).map((e, i) => +i)),
@@ -19,6 +20,33 @@ const getRowAndColumn = (i, arr): Position => {
     row: Math.floor(idx / 4),
     column: idx % 4,
   };
+};
+
+const getNextPosition = (cur: Position, direction: Direction): Position => {
+  switch (direction) {
+  case 'left':
+    return cur.column > 0 ? ({
+      ...cur,
+      column: cur.column - 1,
+    }) : cur;
+  case 'right':
+    return cur.column < 3 ? ({
+      ...cur,
+      column: cur.column + 1,
+    }) : cur;
+  case 'up':
+    return cur.row > 0 ? ({
+      ...cur,
+      row: cur.row - 1,
+    }) : cur;
+  case 'down':
+    return cur.row < 3 ? ({
+      ...cur,
+      row: cur.row + 1,
+    }) : cur;
+  default:
+    return cur;
+  }
 };
 
 const canMoveTo = (startPosition: Position, endPosition: Position): boolean => {
@@ -46,6 +74,27 @@ const isFinish = (arr: number[]): boolean => {
   return true;
 };
 
+const processMove = (state, cur: Position, next: Position) => {
+  if (!canMoveTo(cur, next)) return state;
+
+  const rows = swapArrayElements([...state.rows], state.rows.indexOf(0), 4 * next.row + next.column);
+
+  const finish = isFinish(rows);
+
+  if (finish) setTimeout(() => alert('вы выиграли'), 16);
+
+  return {
+    ...state,
+    history: [
+      ...state.history,
+      state.rows,
+    ],
+    rows,
+    finish,
+  };
+};
+
+
 // console.log(isFinish([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0 ]));
 
 // console.log(
@@ -58,9 +107,16 @@ const isFinish = (arr: number[]): boolean => {
 
 
 export default (state: typeof initial = initial, action: Object) => {
+  if (action.type === types.RESET) return { ...initial };
   if (state.finish) return state;
 
   switch (action.type) {
+  case types.MOVE: {
+    const freePosition = getRowAndColumn(0, state.rows);
+    const nextPosition = getNextPosition(freePosition, action.payload);
+
+    return processMove(state, freePosition, nextPosition);
+  }
   case types.MOVE_TO: {
     const { payload }: { payload: number } = action;
     if (payload === 0) break;
@@ -68,23 +124,7 @@ export default (state: typeof initial = initial, action: Object) => {
     const freePosition = getRowAndColumn(0, state.rows);
     const nextPosition = getRowAndColumn(payload, state.rows);
 
-    if (!canMoveTo(freePosition, nextPosition)) break;
-
-    const rows = swapArrayElements([...state.rows], state.rows.indexOf(0), state.rows.indexOf(payload));
-
-    const finish = isFinish(rows);
-
-    if (finish) setTimeout(() => alert('вы выиграли'), 16);
-
-    return {
-      ...state,
-      history: [
-        ...state.history,
-        state.rows,
-      ],
-      rows,
-      finish,
-    };
+    return processMove(state, freePosition, nextPosition);
   }
 
   case types.STEP_BACK: {

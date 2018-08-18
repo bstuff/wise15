@@ -6,6 +6,7 @@ import { mapProps, compose } from 'recompose';
 
 import styles from './Game.styl';
 
+import { move } from './redux/game.actions';
 import { Row } from './Row';
 import { Back } from './Back';
 
@@ -28,6 +29,14 @@ const enhance = compose(
     state => ({
       arrayOfNumbers: state.game.rows,
     }),
+    dispatch => {
+      window.addEventListener('keyup', (e) => {
+        if (/^Arrow/.test(e.key)) {
+          dispatch(move(e.key.replace('Arrow', '').toLowerCase()));
+        }
+      });
+      return {};
+    }
   ),
   mapProps(
     ({
