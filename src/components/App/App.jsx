@@ -6,19 +6,15 @@ import { Provider } from 'react-redux';
 import styles from './App.styl';
 
 import { Game } from '../Game';
-import { ModalProvider, ModalRoot } from '../ModalProvider';
 import { configureStore } from '../../redux/configureStore';
 
 const store = configureStore();
 
 const App = () => (
   <Provider store={store}>
-    <ModalProvider>
-      <div className={styles.app}>
-        <Game />
-      </div>
-      <ModalRoot />
-    </ModalProvider>
+    <div className={styles.app}>
+      <Game />
+    </div>
   </Provider>
 
 );
