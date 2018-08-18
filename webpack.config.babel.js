@@ -45,7 +45,7 @@ export default function (env = {}) {
     },
     output: {
       path: path.join(__dirname, relativeBuildPath),
-      publicPath: '/wise15/',
+      publicPath: dev ? '/' : '/wise15/',
       filename: 'js/[name].js?[hash]',
     },
 
