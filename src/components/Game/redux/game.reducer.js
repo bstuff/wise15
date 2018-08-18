@@ -1,10 +1,19 @@
 // @flow
 import { shuffle } from 'lodash-es';
+import sgn from 'permutation-parity';
 import * as types from './game.types';
 import { type Direction } from './game.actions';
 
+const initRows = () => {
+  let rows = shuffle(Array.from(Array(16)).map((e, i) => +i + 1));
+  while (sgn(rows) === -1) {
+    rows = shuffle(Array.from(Array(16)).map((e, i) => +i + 1));
+  }
+  return rows;
+};
+
 const initial = {
-  rows: shuffle(Array.from(Array(16)).map((e, i) => +i + 1)),
+  rows: initRows(),
   history: [],
   finish: false,
 };
