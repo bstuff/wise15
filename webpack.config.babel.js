@@ -35,7 +35,7 @@ const dotenvPlugin = new DotenvPlugin({
 
 
 const PORT = yargs.argv.port || 3000;
-const relativeBuildPath = './dist/www';
+const relativeBuildPath = dev ? './dist/www' : './docs';
 
 export default function (env = {}) {
   console.log({ env });
@@ -45,7 +45,7 @@ export default function (env = {}) {
     },
     output: {
       path: path.join(__dirname, relativeBuildPath),
-      publicPath: '/',
+      publicPath: '/wise15/',
       filename: 'js/[name].js?[hash]',
     },
 

@@ -16,17 +16,13 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, combineReducers(reducers));
 
 
-// const dev = process.env.NODE_ENV === 'development';
+const dev = process.env.NODE_ENV === 'development';
 
-const enhancer = compose(...[
-  // Middleware you want to use in development:
-  applyMiddleware(
-    // routerMiddleware(history),
-    // thunk,
-    logger,
-  ),
-  // Required! Enable Redux DevTools with the monitors you chose
-  // dev ? DevTools.instrument() : null,
+// Middleware you want to use in development:
+const enhancer = applyMiddleware(...[
+  // routerMiddleware(history),
+  // thunk,
+  dev && logger,
 ].filter(p => p));
 
 export const configureStore = (initialState = {}) => {
