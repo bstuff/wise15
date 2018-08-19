@@ -20,7 +20,8 @@ const initRows = () => {
   const r = shuf();
 
   if (sgn(r) === -1) {
-    return swapArrayElements(r, 1, 3);
+    console.log('swap performed');
+    return swapArrayElements(r, 1, 2);
   }
   return r;
 };
@@ -88,7 +89,7 @@ const processMove = (state, cur: Position, next: Position) => {
   if (!canMoveTo(cur, next)) return state;
 
   const rows = swapArrayElements([...state.rows], state.rows.indexOf(16), 4 * next.row + next.column);
-
+  // console.log(sgn(rows));
   const finish = isFinish(rows);
 
   if (finish) setTimeout(() => alert('вы выиграли'), 16);
