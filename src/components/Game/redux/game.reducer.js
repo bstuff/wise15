@@ -18,10 +18,12 @@ const swapArrayElements = (a, x, y) => {
 const initRows = () => {
   const shuf = () => shuffle(Array.from(Array(16)).map((e, i) => +i + 1));
   const r = shuf();
+  const idx = r.indexOf(16);
+  const is16AtOddPosition = (idx % 2) * 2 - 1; // 1=odd, -1=even
 
-  if (sgn(r) === -1) {
+  if ((sgn(r) * is16AtOddPosition) === -1) {
     console.log('swap performed');
-    return swapArrayElements(r, 1, 2);
+    return idx > 7 ? swapArrayElements(r, 1, 2) : swapArrayElements(r, 8, 9);
   }
   return r;
 };
